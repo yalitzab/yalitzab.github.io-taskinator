@@ -24,7 +24,7 @@ var createFormHandler = function(event) {
     // has data attribute, so get task id and call function to complete edit process
     if (isEdit) {
         var taskId = formEl.getAttribute("data-task-id");
-        completeEditTask(taskNameInput,taskTypeInput, taskId);
+        completeEditTask(taskNameInput, taskTypeInput, taskId);
     }      
     else{
         var taskDataObj = {
@@ -37,25 +37,30 @@ var createFormHandler = function(event) {
         }
 }
 
+//change status and move tasks
 var taskStatusChangeHandler = function(event){
+    console.log(event)
     // get the task item's id
     var taskId = event.target.getAttribute("data-task-id");
 
-      // get the currently selected option's value and convert to lowercase
-    var statusValue = event.target.value.toLowerCase();
-
     // find the parent task item element based on the id
-  var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+
+     // get the currently selected option's value and convert to lowercase
+     var statusValue = event.target.value.toLowerCase();
 
     if (statusValue === "to do") {
         tasksToDoEl.appendChild(taskSelected);
-    }
-    else if (statusValue === "in progress") {
+      } 
+      else if (statusValue === "in progress") {
         tasksInProgressEl.appendChild(taskSelected);
-    }
-    else if (statusValue === "completed") {
+      } 
+      else if (statusValue === "completed") {
         tasksCompletedEl.appendChild(taskSelected);
-    }
+      }
+
+      console.log(tasksToDoEl, tasksInProgressEl, tasksCompletedEl)
+
 };
 
 
@@ -74,9 +79,6 @@ var completeEditTask = function(taskName, taskType, taskId) {
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent = "Add Task";
 };
-
-
-
 
 
 var createTaskEl = function(taskDataObj) {
